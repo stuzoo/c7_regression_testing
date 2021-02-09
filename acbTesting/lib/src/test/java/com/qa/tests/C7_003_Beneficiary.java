@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -75,16 +76,18 @@ public class C7_003_Beneficiary {
 
 	@BeforeClass
 	public static void setup() {
-		// System.setProperty("webdriver.gecko.driver",
-		// "c:/Gecko/geckodriver.exe");
-		// System.setProperty("webdriver.chrome.driver",
-		// "C:/ChromeDriver/chromedriver.exe");
 		FirefoxProfile ffProfile = new FirefoxProfile();
-		ffProfile.setPreference("network.automatic-ntlm-auth.trusted-uris", "ahr-e68.erpsolutions.local:8000");
+		ffProfile.setPreference("network.automatic-ntlm-auth.trusted-uris", "10.20.4.216:8443");
 		// driver = new FirefoxDriver(ffProfile);
 		// driver = new ChromeDriver();
 		System.setProperty("webdriver.chrome.driver", "/Users/stu/Drivers/chromedriver");
-		WebDriver driver = new ChromeDriver();
+		
+		ChromeOptions options = new ChromeOptions();
+//		options.addArguments("--window-size=1920,1200");
+		options.setAcceptInsecureCerts(true);
+		
+		WebDriver driver = new ChromeDriver(options);
+		
 		// driver = new InternetExplorerDriver();
 		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		// driver.manage().window().maximize();
@@ -147,7 +150,7 @@ public class C7_003_Beneficiary {
 		// assertTrue(masterList.contains("Complete New Hire")); // Q68
      //		assertTrue(masterList.contains("Complete Anytime Enrollment")); // E68
 	//	assertFalse(masterList.contains("Complete Open Enrollment"));
-		Assert.assertEquals(true, masterList.contains("Complete Anytime Enrollment"));
+		Assert.assertEquals(true, masterList.contains("Complete New Hire"));
 		assertTrue(masterListSize == 7); // E68
 		// assertTrue(masterListSize == 6); // Q68
 		for (String masterListLink : masterList) {
@@ -156,28 +159,21 @@ public class C7_003_Beneficiary {
 	}
 
 	@Test(priority = 1, dependsOnMethods = { "test1_MasterListPage_Loaded" })
-	public void test01_CreditDefaulting() {
+	public void test01_Supplemental() {
 		// Navigate to New Hire Enrollment--> Personal Data and verify Data
-		masterListPage.clickMasterListItem("New Hire Enrollment"); // E68
-		masterListPage.clickMasterListItem("New Hire Enrollment");
+		masterListPage.clickMasterListItem("Complete New Hire"); // E68
+		masterListPage.clickMasterListItem("Complete New Hire");
 		// masterListPage.clickMasterListItem("Complete New Hire"); // Q68
 		try {
+			Thread.sleep(5000);
+			Thread.sleep(5000);
+			masterListPage.clickMasterListItem("Supplemental AD&D");
 			Thread.sleep(3000);
+			
+			suppADnDPage.clickUpdate();// sapMListTblSelCol
+			suppADnDPage.selectPlan(1);
 
-			masterListPage.clickMasterListItem("Personal Data");
-			Thread.sleep(3000);
-			String detPageTitle = persDataPage.getPageTitle();
-			String empName = persDataPage.getName();
-			String dob = persDataPage.getDOB();
-			Map<String, String> permAddress = persDataPage.getPermAddress();
-			Map<String, String> mailAddress = persDataPage.getMailingAddress();
-			assertTrue(detPageTitle.equals("PERSONAL DATA"));
-			assertTrue(empName.equals("Federer Roger"));
-			assertTrue(dob.equals("07/24/1956"));
-			assertTrue(permAddress.get("state").equals(""));
-			assertTrue(permAddress.get("zip").equals("76039"));
-
-			assertTrue(mailAddress.get("state").equals("Texas"));
+			suppADnDPage.savePlan();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -92,14 +92,17 @@ public class FSAEmpHlthCarePage extends DetailPage {
 		return planDtsList;
 	}
 
-	public void selectPlan() {
+	public void selectPlan(int planNo) {
 		List<WebElement> planList = SeleniumUtil.findElementListByClassName(driver, "sapMRbHoverable");
-		for (WebElement plan : planList) {
+		
+
+		WebElement plan = planList.get(planNo - 1);
+		if (null != plan) {
 			(new WebDriverWait(this.driver, 30)).until(ExpectedConditions.elementToBeClickable(plan));
 			plan.click();
-			//plan.click();
-			break;
+			plan.click();
 		}
+
 	}
 
 	public void enterAnnualEmpContribution(String Contribution) {

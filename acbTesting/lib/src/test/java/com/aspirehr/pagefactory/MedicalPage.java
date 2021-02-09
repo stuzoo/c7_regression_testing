@@ -96,33 +96,52 @@ public class MedicalPage extends DetailPage {
 		return planDtsList;
 	}
 
+//	public void selectPlan(int planNo) {
+//		try {
+//			// List<WebElement> planList =
+//			// SeleniumUtil.findElementListByClassName(driver,
+//			// "sapMRbHoverable");
+//			planNo = planNo - 1;
+//			String planOptId = "-idHealth-" + planNo + "-selectSingle-Button";
+//			List<WebElement> planList = SeleniumUtil.findElementListByIdSuffix(driver, By.className("sapMLIBSelectS"),
+//					planOptId, 3);
+//			// for (WebElement plan : planList) {
+//			// (new WebDriverWait(this.driver,
+//			// 30)).until(ExpectedConditions.elementToBeClickable(plan));
+//			// plan.click();
+//			// plan.click();
+//			// break;
+//			// }
+//
+//			WebElement plan = planList.get(0);
+//			if (null != plan) {
+//				// (new WebDriverWait(this.driver,
+//				// 30)).until(ExpectedConditions.elementToBeClickable(plan));
+//				plan.click();
+//				plan.click();
+//			}
+//		} catch (Exception e) {
+//			System.err.println("Error occured while selecting Plan:" + e.getMessage());
+//		}
+//	}
+	
 	public void selectPlan(int planNo) {
-		try {
-			// List<WebElement> planList =
-			// SeleniumUtil.findElementListByClassName(driver,
-			// "sapMRbHoverable");
-			planNo = planNo - 1;
-			String planOptId = "-idHealth-" + planNo + "-selectSingle-Button";
-			List<WebElement> planList = SeleniumUtil.findElementListByIdSuffix(driver, By.className("sapMRbHoverable"),
-					planOptId, 3);
-			// for (WebElement plan : planList) {
-			// (new WebDriverWait(this.driver,
-			// 30)).until(ExpectedConditions.elementToBeClickable(plan));
-			// plan.click();
-			// plan.click();
-			// break;
-			// }
+		List<WebElement> planList = SeleniumUtil.findElementListByClassName(driver, "sapMRbHoverable");
+		// for(WebElement plan : planList){
+		// (new WebDriverWait(this.driver, 30))
+		// .until(ExpectedConditions.elementToBeClickable(plan));
+		// plan.click();
+		// plan.click();
+		// break;
+		// }
 
-			WebElement plan = planList.get(0);
-			if (null != plan) {
-				// (new WebDriverWait(this.driver,
-				// 30)).until(ExpectedConditions.elementToBeClickable(plan));
-				plan.click();
-				plan.click();
-			}
-		} catch (Exception e) {
-			System.err.println("Error occured while selecting Plan:" + e.getMessage());
+		WebElement plan = planList.get(planNo - 1);
+		if (null != plan) {
+			(new WebDriverWait(this.driver, 30)).until(ExpectedConditions.elementToBeClickable(plan));
+			plan.click();
+			plan.click();
 		}
+
 	}
 
 	public int getSelectedPlan() {

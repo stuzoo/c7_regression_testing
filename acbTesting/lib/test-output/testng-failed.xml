@@ -3,14 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.qa.tests.C7_001_DefaultingPlans">
+      <class name="com.qa.tests.C7_003_Beneficiary">
         <methods>
-          <include name="test01_CreditDefaulting"/>
-          <include name="test02_CreditDefaulting"/>
+          <include name="test01_Supplemental"/>
           <include name="test1_MasterListPage_Loaded"/>
           <include name="setup"/>
         </methods>
-      </class> <!-- com.qa.tests.C7_001_DefaultingPlans -->
+      </class> <!-- com.qa.tests.C7_003_Beneficiary -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

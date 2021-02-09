@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -75,16 +76,18 @@ public class C7_002_Corequisite {
 
 	@BeforeClass
 	public static void setup() {
-		// System.setProperty("webdriver.gecko.driver",
-		// "c:/Gecko/geckodriver.exe");
-		// System.setProperty("webdriver.chrome.driver",
-		// "C:/ChromeDriver/chromedriver.exe");
 		FirefoxProfile ffProfile = new FirefoxProfile();
-		ffProfile.setPreference("network.automatic-ntlm-auth.trusted-uris", "ahr-e68.erpsolutions.local:8000");
+		ffProfile.setPreference("network.automatic-ntlm-auth.trusted-uris", "10.20.4.216:8443");
 		// driver = new FirefoxDriver(ffProfile);
 		// driver = new ChromeDriver();
 		System.setProperty("webdriver.chrome.driver", "/Users/stu/Drivers/chromedriver");
-		WebDriver driver = new ChromeDriver();
+		
+		ChromeOptions options = new ChromeOptions();
+//		options.addArguments("--window-size=1920,1200");
+		options.setAcceptInsecureCerts(true);
+		
+		WebDriver driver = new ChromeDriver(options);
+		
 		// driver = new InternetExplorerDriver();
 		// driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		// driver.manage().window().maximize();
@@ -94,7 +97,7 @@ public class C7_002_Corequisite {
 		String URL = "10.20.4.216:8443/sap/bc/ui5_ui5/ahrclben/cloud/index.html";
 		// String URL =
 		// "ahr-e68demo.erpsolutions.local:8000/sap/bc/ui5_ui5/ahrclben/cloud/index.html";
-		String uid = "c702";
+		String uid = "c701";
 		String pwd = "c7testing";
 
 		// this is for IE
@@ -185,10 +188,13 @@ public void test02_EnrollinFSA() {
 			Thread.sleep(5000);
 			Thread.sleep(5000);
 			masterListPage.clickMasterListItem("Health Care Spending Account");
+			masterListPage.clickMasterListItem("Health Care Spending Account");
 			Thread.sleep(3000);
 			
 			fsaEmpHlthCarePage.clickUpdate();// sapMListTblSelCol
-//			fsaEmpHlthCarePage.selectPlan(1);
+			fsaEmpHlthCarePage.clickUpdate();// sapMListTblSelCol
+			fsaEmpHlthCarePage.selectPlan(1);
+			fsaEmpHlthCarePage.enterAnnualEmpContribution("200");
 
 			fsaEmpHlthCarePage.savePlan();
 		} catch (InterruptedException e) {

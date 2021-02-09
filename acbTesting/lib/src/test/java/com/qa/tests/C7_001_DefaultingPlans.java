@@ -179,7 +179,7 @@ public class C7_001_DefaultingPlans {
 			Thread.sleep(3000);
 			
 			flexCreditPage.clickUpdate();// sapMListTblSelCol
-			 flexCreditPage.selectPlan(1);
+			flexCreditPage.selectPlan(1);
 
 			 flexCreditPage.savePlan();
 		} catch (InterruptedException e) {
